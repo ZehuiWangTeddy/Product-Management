@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Apple",
+    "price": 2.99,
+    "rating": 4.5
+  },
+  {
+    "name": "Banana",
+    "price": 1.99,
+    "rating": 4.0
+  },
+  {
+    "name": "Orange",
+    "price": 3.49,
+    "rating": 4.2
+  },
+  {
+    "name": "Cookie",
+    "price": 4.59,
+    "rating": 2.1
+  },
+  {
+    "name": "Bread",
+    "price": 0.99,
+    "rating": 5.0
+  }
+]
