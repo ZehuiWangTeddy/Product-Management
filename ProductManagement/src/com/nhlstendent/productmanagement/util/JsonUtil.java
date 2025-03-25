@@ -1,11 +1,12 @@
-package com.nhlstendent.productmanagement.product;
+package com.nhlstendent.productmanagement.util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nhlstendent.productmanagement.model.Product;
 
 import java.io.FileReader;
 import java.util.List;
 
-public class JsonUtils
+public class JsonUtil
 {
     private static final Gson gson = new Gson();
 

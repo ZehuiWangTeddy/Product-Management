@@ -1,4 +1,4 @@
-package com.nhlstendent.productmanagement.product;
+package com.nhlstendent.productmanagement.model;
 
 import java.util.Objects;
 
@@ -8,6 +8,7 @@ public class Product
     private double price;
     private double rating;
 
+    // keep empty for import function
     public Product()
     {
     }

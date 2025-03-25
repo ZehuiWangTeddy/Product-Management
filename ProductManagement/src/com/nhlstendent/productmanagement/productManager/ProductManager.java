@@ -1,14 +1,16 @@
-package com.nhlstendent.productmanagement.product;
+package com.nhlstendent.productmanagement.productManager;
 
-import java.io.File;
+import com.nhlstendent.productmanagement.model.Product;
+import com.nhlstendent.productmanagement.util.JsonUtil;
+
 import java.util.*;
 
 public class ProductManager
 {
-    private List<Product> arrayList;
-    private List<Product> linkedList;
-    private Set<String> productNames;
-    private Map<String, Product> hashMap;
+    private List<Product> arrayList; // for sorting and linear search
+    private List<Product> linkedList; // manually add product
+    private Set<String> productNames; // import file
+    private Map<String, Product> hashMap; // binary search
 
     public ProductManager()
     {
@@ -60,7 +62,7 @@ public class ProductManager
 
     public void importFromFile(String filePath)
     {
-        List<Product> products = JsonUtils.parseProduct(filePath);
+        List<Product> products = JsonUtil.parseProduct(filePath);
         if (products == null) {
             throw new RuntimeException("Failed to load products from file");
         }

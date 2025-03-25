@@ -1,71 +1,112 @@
 package com.nhlstendent.productmanagement.ui;
 
+import com.nhlstendent.productmanagement.controller.ProductController;
+import com.nhlstendent.productmanagement.ui.ProductTablePanel;
+import com.nhlstendent.productmanagement.ui.TopPanel;
+
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainGUI {
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainGUI().createAndShowGUI());
+    private final JFrame frame;
+    private final ProductController controller;
+    private final ProductTablePanel tablePanel;
+    private final JLabel statusLabel;
+    private final TopPanel topPanel;
+
+    public MainGUI() {
+        controller = new ProductController();
+        frame = new JFrame("Product Manager");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(700, 300);
+
+        tablePanel = new ProductTablePanel();
+        statusLabel = new JLabel("Execution Time: ");
+
+        topPanel = new TopPanel(
+                new UploadHandler(),
+                new SearchHandler(),
+                new SortHandler(),
+                new ResetHandler()
+        );
+
+        initUI();
     }
 
-    private void createAndShowGUI() {
-        JFrame frame = new JFrame("Task Manager");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 200);
+    private void initUI() {
         frame.setLayout(new BorderLayout());
-
-        JPanel topPanel = createTopPanel();
         frame.add(topPanel, BorderLayout.NORTH);
-
+        frame.add(tablePanel, BorderLayout.CENTER);
+        frame.add(statusLabel, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 
-    private JPanel createTopPanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        // Search Components
-        JTextField searchField = createSearchField();
-        JButton searchButton = createSearchButton();
-
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(new JLabel("Search:"), gbc);
-        gbc.gridx = 1;
-        panel.add(searchField, gbc);
-        gbc.gridx = 2;
-        panel.add(searchButton, gbc);
-
-        // Sort Components
-        JComboBox<String> sortDropdown = createSortDropdown();
-        gbc.gridx = 3;
-        panel.add(sortDropdown, gbc);
-
-        // Upload Button
-        JButton uploadButton = createUploadButton();
-        gbc.gridx = 4;
-        gbc.weightx = 1.0;
-        gbc.anchor = GridBagConstraints.LINE_END;
-        panel.add(uploadButton, gbc);
-
-        return panel;
+    private class UploadHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    controller.loadProductsFromFile(fileChooser.getSelectedFile().getAbsolutePath());
+                    tablePanel.updateTable(controller.getProducts());
+                    statusLabel.setText("File loaded successfully");
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(frame,
+                            ex.getMessage(),
+                            "Import Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame,
+                            "Error reading file: " + ex.getMessage(),
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }
 
-    private JTextField createSearchField() {
-        return new JTextField(15);
+    private class SearchHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            long start = System.currentTimeMillis();
+            List<Map<String, Object>> results = controller.linearSearch(topPanel.getSearchText());
+            long duration = System.currentTimeMillis() - start;
+
+            if (!results.isEmpty() && results.get(0).containsKey("Sorry")) {
+                String errorMessage = (String) results.get(0).get("Sorry");
+                statusLabel.setText("Error: " + errorMessage + " (" + duration + " ms)");
+                tablePanel.updateTable(new ArrayList<>());
+            } else {
+                tablePanel.updateTable(results);
+                statusLabel.setText("Execution Time: " + duration + " ms | Results: " + results.size());
+            }
+        }
     }
 
-    private JButton createSearchButton() {
-        return new JButton("Search");
+    private class SortHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            long start = System.currentTimeMillis();
+            controller.sortProductsByPrice();
+            long duration = System.currentTimeMillis() - start;
+
+            tablePanel.updateTable(controller.getProducts());
+            statusLabel.setText("Execution Time: " + duration + " ms");
+        }
     }
 
-    private JComboBox<String> createSortDropdown() {
-        String[] sortOptions = {"Sort by Name", "Sort by Date"};
-        return new JComboBox<>(sortOptions);
-    }
-
-    private JButton createUploadButton() {
-        return new JButton("Upload File");
+    private class ResetHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            controller.resetProducts();
+            tablePanel.updateTable(controller.getProducts());
+            statusLabel.setText("Execution Time: ");
+        }
     }
 }
