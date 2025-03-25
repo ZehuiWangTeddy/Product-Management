@@ -23,5 +23,15 @@
     "name": "Bread",
     "price": 0.99,
     "rating": 5.0
+  },
+  {
+    "name": "Biscuit",
+    "price": 1.99,
+    "rating": 2.0
+  },
+  {
+    "name": "Coconut",
+    "price": 2.99,
+    "rating": 3.0
   }
 ]
