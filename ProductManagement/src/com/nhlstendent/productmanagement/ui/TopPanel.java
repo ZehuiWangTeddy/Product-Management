@@ -12,6 +12,7 @@ public class TopPanel extends JPanel {
     public TopPanel(ActionListener uploadHandler,
                     ActionListener searchHandler,
                     ActionListener sortHandler,
+                    ActionListener sortByLetterHandler,
                     ActionListener resetHandler) {
 
         setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
@@ -33,6 +34,12 @@ public class TopPanel extends JPanel {
         JButton sortButton = new JButton("Sort by Price");
         sortButton.addActionListener(sortHandler);
         add(sortButton);
+
+        // Sort by Letter Button
+        JButton sortByLetterButton = new JButton("Sort A-Z");
+        sortByLetterButton.addActionListener(sortByLetterHandler);
+        add(sortByLetterButton);
+
 
         // Reset Button
         JButton resetButton = new JButton("RESET");

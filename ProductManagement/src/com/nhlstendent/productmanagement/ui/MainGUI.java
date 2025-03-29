@@ -32,6 +32,7 @@ public class MainGUI {
                 new UploadHandler(),
                 new SearchHandler(),
                 new SortHandler(),
+                new SortByLetterHandler(),
                 new ResetHandler()
         );
 
@@ -74,13 +75,21 @@ public class MainGUI {
     private class SearchHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            String query = topPanel.getSearchText();
             long start = System.currentTimeMillis();
-            List<Map<String, Object>> results = controller.linearSearch(topPanel.getSearchText());
+            List<Map<String, Object>> results;
+
+            try {
+                double priceQuery = Double.parseDouble(query); // Check if query is a number (price)
+                results = controller.binarySearchByPrice(priceQuery);
+            } catch (NumberFormatException ex) {
+                results = controller.linearSearch(query); // If not a number, perform linear search
+            }
+
             long duration = System.currentTimeMillis() - start;
 
             if (!results.isEmpty() && results.get(0).containsKey("Sorry")) {
-                String errorMessage = (String) results.get(0).get("Sorry");
-                statusLabel.setText("Error: " + errorMessage + " (" + duration + " ms)");
+                statusLabel.setText("Error: " + results.get(0).get("Sorry") + " (" + duration + " ms)");
                 tablePanel.updateTable(new ArrayList<>());
             } else {
                 tablePanel.updateTable(results);
@@ -89,11 +98,25 @@ public class MainGUI {
         }
     }
 
+
+
     private class SortHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             long start = System.currentTimeMillis();
             controller.sortProductsByPrice();
+            long duration = System.currentTimeMillis() - start;
+
+            tablePanel.updateTable(controller.getProducts());
+            statusLabel.setText("Execution Time: " + duration + " ms");
+        }
+    }
+
+    private class SortByLetterHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            long start = System.currentTimeMillis();
+            controller.sortProductsByName();
             long duration = System.currentTimeMillis() - start;
 
             tablePanel.updateTable(controller.getProducts());
