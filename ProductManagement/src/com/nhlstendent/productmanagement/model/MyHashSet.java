@@ -75,7 +75,7 @@ public class MyHashSet<T> implements Iterable<T> {
         }
     }
 
-    public boolean addAll(MyArrayList<T> collection) {
+    public boolean addAll(MyHashSet<T> collection) {
         boolean isChanged = false;
         for (T element : collection) {
             if (add(element)) {
@@ -84,7 +84,6 @@ public class MyHashSet<T> implements Iterable<T> {
         }
         return isChanged;
     }
-
 
     // Iterable interface implementation
     @Override

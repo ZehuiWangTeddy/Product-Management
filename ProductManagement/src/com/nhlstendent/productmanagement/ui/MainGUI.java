@@ -2,13 +2,11 @@ package com.nhlstendent.productmanagement.ui;
 
 import com.nhlstendent.productmanagement.controller.ProductController;
 import com.nhlstendent.productmanagement.model.MyArrayList;
+import com.nhlstendent.productmanagement.model.MyHashMap;
 import com.nhlstendent.productmanagement.ui.ProductTablePanel;
 import com.nhlstendent.productmanagement.ui.TopPanel;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -78,7 +76,7 @@ public class MainGUI {
         public void actionPerformed(ActionEvent e) {
             String query = topPanel.getSearchText();
             long start = System.currentTimeMillis();
-            MyArrayList<Map<String, Object>> results;
+            MyArrayList<MyHashMap<String, Object>> results;
 
             try {
                 double priceQuery = Double.parseDouble(query); // Check if query is a number (price)
@@ -98,8 +96,6 @@ public class MainGUI {
             }
         }
     }
-
-
 
     private class SortHandler implements ActionListener {
         @Override

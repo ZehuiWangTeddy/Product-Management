@@ -6,8 +6,6 @@ import com.nhlstendent.productmanagement.model.MyHashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
-import java.util.Map;
 
 public class ProductTablePanel extends JPanel {
     private final DefaultTableModel tableModel;

@@ -1,6 +1,6 @@
 package com.nhlstendent.productmanagement.model;
 
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
@@ -75,7 +75,7 @@ public class MyArrayList<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (T) elements[index++]; // ✅ 需要强制转换 (T)
+                return (T) elements[index++]; // Requires forced conversion (T)
             }
         };
     }
@@ -90,8 +90,19 @@ public class MyArrayList<T> implements Iterable<T> {
         return Stream.of((T[]) elements).limit(size);
     }
 
-    public void sort() {
-        Arrays.sort((T[]) elements, 0, size);
+    public void sort(Comparator<? super T> comparator) {
+        @SuppressWarnings("unchecked")
+        T[] array = (T[]) elements;
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (comparator.compare(array[j], array[j + 1]) > 0) {
+                    // Swapping elements
+                    T temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
     }
 
     public MyArrayList<T> subList(int fromIndex, int toIndex) {

@@ -54,6 +54,18 @@ public class MyHashMap<K, V> {
         return null; // Key not found
     }
 
+    public boolean containsKey(K key) {
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
+        while (current != null) {
+            if (current.key.equals(key)) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
     public void remove(K key) {
         int index = hash(key);
         Node<K, V> current = buckets[index];

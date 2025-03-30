@@ -7,32 +7,38 @@ import com.nhlstendent.productmanagement.model.Product;
 import com.nhlstendent.productmanagement.productManager.ProductManager;
 import com.nhlstendent.productmanagement.util.JsonUtil;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 public class ProductController {
     private MyArrayList<MyHashMap<String, Object>> products = new MyArrayList<>();
     private MyArrayList<MyHashMap<String, Object>> originalProducts = new MyArrayList<>();
     private MyHashSet<String> productNames = new MyHashSet<>();
 
     public void loadProductsFromFile(String filePath) {
+        
         MyArrayList<Product> parsedProducts = JsonUtil.parseProduct(filePath);
-        checkDuplicateNames(parsedProducts);
-        this.products = convertToDTO(parsedProducts);
-        this.originalProducts = new ArrayList<>(products);
-    }
-
-    private void checkDuplicateNames(MyArrayList<Product> products) {
-        MyHashSet<String> names = new MyHashSet<>();
-        for (Product product : products) {
-            if (names.contains(product.getName())) {
+        if (parsedProducts == null || parsedProducts.isEmpty()) {
+            throw new IllegalArgumentException("No products found in the file");
+        }
+        
+        // check if the product name is already in the productNames set
+        for (Product product : parsedProducts) {
+            if (productNames.contains(product.getName())) {
                 throw new IllegalArgumentException("The product already exist: " + product.getName());
             }
-            names.add(product.getName());
+            productNames.add(product.getName());
         }
-        this.productNames.addAll(names);
-    }
 
+        this.products = convertToDTO(parsedProducts);
+        
+        // Create a deep copy of the original data
+        this.originalProducts = new MyArrayList<>();
+        for (MyHashMap<String, Object> product : products) {
+            MyHashMap<String, Object> copy = new MyHashMap<>();
+            copy.put("name", product.get("name"));
+            copy.put("price", product.get("price"));
+            copy.put("rating", product.get("rating"));
+            originalProducts.add(copy);
+        }
+    }
 
     // Linear Search
     public MyArrayList<MyHashMap<String, Object>> linearSearch(String query) {
@@ -45,16 +51,25 @@ public class ProductController {
         }
 
         if (results.isEmpty()) {
-            results.add(Collections.singletonMap("Sorry", "no products matching"));
+            MyHashMap<String, Object> error = new MyHashMap<>();
+            error.put("Sorry", "no products matching");
+            results.add(error);
         }
         return results;
     }
 
     // Binary Search by Price
     public MyArrayList<MyHashMap<String, Object>> binarySearchByPrice(double targetPrice) {
-        MyArrayList<MyHashMap<String, Object>> sortedProducts = new MyArrayList<>(products);
+        MyArrayList<MyHashMap<String, Object>> sortedProducts = new MyArrayList<>();
+        for (MyHashMap<String, Object> product : products) {
+            sortedProducts.add(product);
+        }
 
-        sortedProducts.sort(Comparator.comparingDouble(p -> (Double) p.get("price")));
+        sortedProducts.sort((o1, o2) -> {
+            Double price1 = (Double) o1.get("price");
+            Double price2 = (Double) o2.get("price");
+            return price1.compareTo(price2);
+        });
 
         int left = 0, right = sortedProducts.size() - 1;
         MyArrayList<MyHashMap<String, Object>> result = new MyArrayList<>();
@@ -80,12 +95,14 @@ public class ProductController {
             }
         }
 
-        return Collections.singletonList(Collections.singletonMap("Sorry", "No products found with price " + targetPrice));
+        MyHashMap<String, Object> error = new MyHashMap<>();
+        error.put("Sorry", "No products found with price " + targetPrice);
+        result.add(error);
+        return result;
     }
 
-
     public void sortProductsByPrice() {
-        Collections.sort(products, (o1, o2) -> {
+        products.sort((o1, o2) -> {
             Double price1 = (Double) o1.get("price");
             Double price2 = (Double) o2.get("price");
             return price2.compareTo(price1); // Descending
@@ -100,13 +117,23 @@ public class ProductController {
         if (list.size() <= 1) return list;
 
         int mid = list.size() / 2;
-        MyArrayList<MyHashMap<String, Object>> left = mergeSort(new MyArrayList<>(list.subList(0, mid)));
-        MyArrayList<MyHashMap<String, Object>> right = mergeSort(new MyArrayList<>(list.subList(mid, list.size())));
+        MyArrayList<MyHashMap<String, Object>> left = new MyArrayList<>();
+        MyArrayList<MyHashMap<String, Object>> right = new MyArrayList<>();
+        
+        for (int i = 0; i < mid; i++) {
+            left.add(list.get(i));
+        }
+        for (int i = mid; i < list.size(); i++) {
+            right.add(list.get(i));
+        }
+        
+        left = mergeSort(left);
+        right = mergeSort(right);
 
         return merge(left, right);
     }
 
-    private MyArrayList<MyHashMap<String, Object>> merge(MyArrayList<MyHashMap<String, Object>> left, List<Map<String, Object>> right) {
+    private MyArrayList<MyHashMap<String, Object>> merge(MyArrayList<MyHashMap<String, Object>> left, MyArrayList<MyHashMap<String, Object>> right) {
         MyArrayList<MyHashMap<String, Object>> merged = new MyArrayList<>();
         int i = 0, j = 0;
 
@@ -128,7 +155,14 @@ public class ProductController {
     }
 
     public void resetProducts() {
-        products = new MyArrayList<>(originalProducts);
+        products = new MyArrayList<>();
+        for (MyHashMap<String, Object> product : originalProducts) {
+            MyHashMap<String, Object> copy = new MyHashMap<>();
+            copy.put("name", product.get("name"));
+            copy.put("price", product.get("price"));
+            copy.put("rating", product.get("rating"));
+            products.add(copy);
+        }
     }
 
     public MyArrayList<MyHashMap<String, Object>> getProducts() {
@@ -136,12 +170,14 @@ public class ProductController {
     }
 
     private MyArrayList<MyHashMap<String, Object>> convertToDTO(MyArrayList<Product> products) {
-        return products.stream().map(p -> {
+        MyArrayList<MyHashMap<String, Object>> result = new MyArrayList<>();
+        for (Product product : products) {
             MyHashMap<String, Object> dto = new MyHashMap<>();
-            dto.put("name", p.getName());
-            dto.put("price", p.getPrice());
-            dto.put("rating", p.getRating());
-            return dto;
-        }).collect(Collectors.toList());
+            dto.put("name", product.getName());
+            dto.put("price", product.getPrice());
+            dto.put("rating", product.getRating());
+            result.add(dto);
+        }
+        return result;
     }
 }
