@@ -1,68 +1,67 @@
 package com.nhlstendent.productmanagement.productManager;
 
-import com.nhlstendent.productmanagement.model.Product;
+import com.nhlstendent.productmanagement.model.*;
 import com.nhlstendent.productmanagement.util.JsonUtil;
 
 import java.util.*;
 
 public class ProductManager
 {
-    private List<Product> arrayList; // for sorting and linear search
-    private List<Product> linkedList; // manually add product
-    private Set<String> productNames; // import file
-    private Map<String, Product> hashMap; // binary search
+    private MyArrayList<Product> arrayList; // for sorting and linear search
+    private MyLinkedList<Product> linkedList; // manually add product
+    private MyHashSet<String> productNames; // import file
+    private MyHashMap<String, Product> hashMap; // binary search
 
     public ProductManager()
     {
-        this.arrayList = new ArrayList<>();
-        this.linkedList = new LinkedList<>();
-        this.productNames = new HashSet<>();
-        this.hashMap = new HashMap<>();
+        this.arrayList = new MyArrayList<>();
+        this.linkedList = new MyLinkedList<>();
+        this.productNames = new MyHashSet<>();
+        this.hashMap = new MyHashMap<>();
     }
 
-    public List<Product> getArrayList()
+    public MyArrayList<Product> getArrayList()
     {
         return arrayList;
     }
 
-    public void setArrayList(List<Product> arrayList)
+    public void setArrayList(MyArrayList<Product> arrayList)
     {
         this.arrayList = arrayList;
     }
 
-    public List<Product> getLinkedList()
+    public MyLinkedList<Product> getLinkedList()
     {
         return linkedList;
     }
 
-    public void setLinkedList(List<Product> linkedList)
+    public void setLinkedList(MyLinkedList<Product> linkedList)
     {
         this.linkedList = linkedList;
     }
 
-    public Set<String> getProductNames()
+    public MyHashSet<String> getProductNames()
     {
         return productNames;
     }
 
-    public void setProductNames(Set<String> productNames)
+    public void setProductNames(MyHashSet<String> productNames)
     {
         this.productNames = productNames;
     }
 
-    public Map<String, Product> getHashMap()
+    public MyHashMap<String, Product> getHashMap()
     {
         return hashMap;
     }
 
-    public void setHashMap(Map<String, Product> hashMap)
+    public void setHashMap(MyHashMap<String, Product> hashMap)
     {
         this.hashMap = hashMap;
     }
 
-    public void importFromFile(String filePath)
-    {
-        List<Product> products = JsonUtil.parseProduct(filePath);
+    public void importFromFile(String filePath) {
+        MyArrayList<Product> products = JsonUtil.parseProduct(filePath);
         if (products == null) {
             throw new RuntimeException("Failed to load products from file");
         }
@@ -72,10 +71,9 @@ public class ProductManager
         }
     }
 
-    public void addProduct(Product product)
-    {
+    public void addProduct(Product product) {
         if (productNames.contains(product.getName())) {
-            throw new IllegalArgumentException("Product name already exists" + product.getName());
+            throw new IllegalArgumentException("Product name already exists: " + product.getName());
         }
         this.arrayList.add(product);
         this.linkedList.add(product);
@@ -83,8 +81,7 @@ public class ProductManager
         this.hashMap.put(product.getName(), product);
     }
 
-    public void removeProduct(String productName)
-    {
+    public void removeProduct(String productName) {
         Product product = this.hashMap.get(productName);
         if (product != null) {
             this.arrayList.remove(product);
