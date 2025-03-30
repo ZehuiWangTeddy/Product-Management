@@ -1,6 +1,7 @@
 package com.nhlstendent.productmanagement.ui;
 
 import com.nhlstendent.productmanagement.controller.ProductController;
+import com.nhlstendent.productmanagement.model.MyArrayList;
 import com.nhlstendent.productmanagement.ui.ProductTablePanel;
 import com.nhlstendent.productmanagement.ui.TopPanel;
 
@@ -77,7 +78,7 @@ public class MainGUI {
         public void actionPerformed(ActionEvent e) {
             String query = topPanel.getSearchText();
             long start = System.currentTimeMillis();
-            List<Map<String, Object>> results;
+            MyArrayList<Map<String, Object>> results;
 
             try {
                 double priceQuery = Double.parseDouble(query); // Check if query is a number (price)
@@ -90,7 +91,7 @@ public class MainGUI {
 
             if (!results.isEmpty() && results.get(0).containsKey("Sorry")) {
                 statusLabel.setText("Error: " + results.get(0).get("Sorry") + " (" + duration + " ms)");
-                tablePanel.updateTable(new ArrayList<>());
+                tablePanel.updateTable(new MyArrayList<>());
             } else {
                 tablePanel.updateTable(results);
                 statusLabel.setText("Execution Time: " + duration + " ms | Results: " + results.size());

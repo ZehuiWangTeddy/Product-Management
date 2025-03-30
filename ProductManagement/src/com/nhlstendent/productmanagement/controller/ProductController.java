@@ -1,5 +1,8 @@
 package com.nhlstendent.productmanagement.controller;
 
+import com.nhlstendent.productmanagement.model.MyArrayList;
+import com.nhlstendent.productmanagement.model.MyHashMap;
+import com.nhlstendent.productmanagement.model.MyHashSet;
 import com.nhlstendent.productmanagement.model.Product;
 import com.nhlstendent.productmanagement.productManager.ProductManager;
 import com.nhlstendent.productmanagement.util.JsonUtil;
@@ -8,19 +11,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductController {
-    private List<Map<String, Object>> products = new ArrayList<>();
-    private List<Map<String, Object>> originalProducts = new ArrayList<>();
-    private Set<String> productNames = new HashSet<>();
+    private MyArrayList<MyHashMap<String, Object>> products = new MyArrayList<>();
+    private MyArrayList<MyHashMap<String, Object>> originalProducts = new MyArrayList<>();
+    private MyHashSet<String> productNames = new MyHashSet<>();
 
     public void loadProductsFromFile(String filePath) {
-        List<Product> parsedProducts = JsonUtil.parseProduct(filePath);
+        MyArrayList<Product> parsedProducts = JsonUtil.parseProduct(filePath);
         checkDuplicateNames(parsedProducts);
         this.products = convertToDTO(parsedProducts);
         this.originalProducts = new ArrayList<>(products);
     }
 
-    private void checkDuplicateNames(List<Product> products) {
-        Set<String> names = new HashSet<>();
+    private void checkDuplicateNames(MyArrayList<Product> products) {
+        MyHashSet<String> names = new MyHashSet<>();
         for (Product product : products) {
             if (names.contains(product.getName())) {
                 throw new IllegalArgumentException("The product already exist: " + product.getName());
@@ -32,9 +35,9 @@ public class ProductController {
 
 
     // Linear Search
-    public List<Map<String, Object>> linearSearch(String query) {
-        List<Map<String, Object>> results = new ArrayList<>();
-        for (Map<String, Object> product : products) {
+    public MyArrayList<MyHashMap<String, Object>> linearSearch(String query) {
+        MyArrayList<MyHashMap<String, Object>> results = new MyArrayList<>();
+        for (MyHashMap<String, Object> product : products) {
             String name = (String) product.get("name");
             if (name.toLowerCase().contains(query.toLowerCase())) {
                 results.add(product);
@@ -48,13 +51,13 @@ public class ProductController {
     }
 
     // Binary Search by Price
-    public List<Map<String, Object>> binarySearchByPrice(double targetPrice) {
-        List<Map<String, Object>> sortedProducts = new ArrayList<>(products);
+    public MyArrayList<MyHashMap<String, Object>> binarySearchByPrice(double targetPrice) {
+        MyArrayList<MyHashMap<String, Object>> sortedProducts = new MyArrayList<>(products);
 
         sortedProducts.sort(Comparator.comparingDouble(p -> (Double) p.get("price")));
 
         int left = 0, right = sortedProducts.size() - 1;
-        List<Map<String, Object>> result = new ArrayList<>();
+        MyArrayList<MyHashMap<String, Object>> result = new MyArrayList<>();
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
@@ -93,18 +96,18 @@ public class ProductController {
         products = mergeSort(products);
     }
 
-    private List<Map<String, Object>> mergeSort(List<Map<String, Object>> list) {
+    private MyArrayList<MyHashMap<String, Object>> mergeSort(MyArrayList<MyHashMap<String, Object>> list) {
         if (list.size() <= 1) return list;
 
         int mid = list.size() / 2;
-        List<Map<String, Object>> left = mergeSort(new ArrayList<>(list.subList(0, mid)));
-        List<Map<String, Object>> right = mergeSort(new ArrayList<>(list.subList(mid, list.size())));
+        MyArrayList<MyHashMap<String, Object>> left = mergeSort(new MyArrayList<>(list.subList(0, mid)));
+        MyArrayList<MyHashMap<String, Object>> right = mergeSort(new MyArrayList<>(list.subList(mid, list.size())));
 
         return merge(left, right);
     }
 
-    private List<Map<String, Object>> merge(List<Map<String, Object>> left, List<Map<String, Object>> right) {
-        List<Map<String, Object>> merged = new ArrayList<>();
+    private MyArrayList<MyHashMap<String, Object>> merge(MyArrayList<MyHashMap<String, Object>> left, List<Map<String, Object>> right) {
+        MyArrayList<MyHashMap<String, Object>> merged = new MyArrayList<>();
         int i = 0, j = 0;
 
         while (i < left.size() && j < right.size()) {
@@ -125,16 +128,16 @@ public class ProductController {
     }
 
     public void resetProducts() {
-        products = new ArrayList<>(originalProducts);
+        products = new MyArrayList<>(originalProducts);
     }
 
-    public List<Map<String, Object>> getProducts() {
+    public MyArrayList<MyHashMap<String, Object>> getProducts() {
         return products;
     }
 
-    private List<Map<String, Object>> convertToDTO(List<Product> products) {
+    private MyArrayList<MyHashMap<String, Object>> convertToDTO(MyArrayList<Product> products) {
         return products.stream().map(p -> {
-            Map<String, Object> dto = new HashMap<>();
+            MyHashMap<String, Object> dto = new MyHashMap<>();
             dto.put("name", p.getName());
             dto.put("price", p.getPrice());
             dto.put("rating", p.getRating());
