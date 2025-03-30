@@ -2,16 +2,18 @@ package com.nhlstendent.productmanagement;
 
 import com.nhlstendent.productmanagement.model.MyArrayList;
 import com.nhlstendent.productmanagement.model.MyHashMap;
-import com.nhlstendent.productmanagement.model.Product;
 import com.nhlstendent.productmanagement.ui.ProductTablePanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TestDataLoader {
-    public static void main(String[] args) {
+public class TestDataLoader
+{
+    public static void main(String[] args)
+    {
         // Running GUI code in the EDT thread
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() ->
+        {
 
             JFrame frame = new JFrame("testloading file");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,7 +24,8 @@ public class TestDataLoader {
             MyArrayList<MyHashMap<String, Object>> testData = createTestData();
 
             JButton loadButton = new JButton("loading data");
-            loadButton.addActionListener(e -> {
+            loadButton.addActionListener(e ->
+            {
                 tablePanel.updateTable(testData);
             });
 
@@ -33,8 +36,9 @@ public class TestDataLoader {
             frame.setVisible(true);
         });
     }
-    
-    private static MyArrayList<MyHashMap<String, Object>> createTestData() {
+
+    private static MyArrayList<MyHashMap<String, Object>> createTestData()
+    {
         MyArrayList<MyHashMap<String, Object>> data = new MyArrayList<MyHashMap<String, Object>>();
 
         addProduct(data, "apple", 2.99, 4.5);
@@ -42,12 +46,13 @@ public class TestDataLoader {
         addProduct(data, "orange", 3.49, 4.2);
         addProduct(data, "cookie", 4.59, 2.1);
         addProduct(data, "bread", 0.99, 5.0);
-        
+
         return data;
     }
-    
-    private static void addProduct(MyArrayList<MyHashMap<String, Object>> data, 
-                                  String name, double price, double rating) {
+
+    private static void addProduct(MyArrayList<MyHashMap<String, Object>> data,
+                                   String name, double price, double rating)
+    {
         MyHashMap<String, Object> product = new MyHashMap<String, Object>();
         product.put("name", name);
         product.put("price", price);

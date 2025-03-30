@@ -1,36 +1,29 @@
 package com.nhlstendent.productmanagement.model;
 
-public class MyHashMap<K, V> {
-    private static class Node<K, V> {
-        K key;
-        V value;
-        Node<K, V> next;
-
-        Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-            this.next = null;
-        }
-    }
-
+public class MyHashMap<K, V>
+{
     private static final int DEFAULT_CAPACITY = 16;
     private Node<K, V>[] buckets;
     private int size;
-
-    public MyHashMap() {
+    public MyHashMap()
+    {
         buckets = new Node[DEFAULT_CAPACITY];
         size = 0;
     }
 
-    private int hash(K key) {
+    private int hash(K key)
+    {
         return Math.abs(key.hashCode()) % buckets.length;
     }
 
-    public void put(K key, V value) {
+    public void put(K key, V value)
+    {
         int index = hash(key);
         Node<K, V> current = buckets[index];
-        while (current != null) {
-            if (current.key.equals(key)) {
+        while (current != null)
+        {
+            if (current.key.equals(key))
+            {
                 current.value = value;
                 return;
             }
@@ -42,11 +35,14 @@ public class MyHashMap<K, V> {
         size++;
     }
 
-    public V get(K key) {
+    public V get(K key)
+    {
         int index = hash(key);
         Node<K, V> current = buckets[index];
-        while (current != null) {
-            if (current.key.equals(key)) {
+        while (current != null)
+        {
+            if (current.key.equals(key))
+            {
                 return current.value;
             }
             current = current.next;
@@ -54,11 +50,14 @@ public class MyHashMap<K, V> {
         return null; // Key not found
     }
 
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key)
+    {
         int index = hash(key);
         Node<K, V> current = buckets[index];
-        while (current != null) {
-            if (current.key.equals(key)) {
+        while (current != null)
+        {
+            if (current.key.equals(key))
+            {
                 return true;
             }
             current = current.next;
@@ -66,15 +65,21 @@ public class MyHashMap<K, V> {
         return false;
     }
 
-    public void remove(K key) {
+    public void remove(K key)
+    {
         int index = hash(key);
         Node<K, V> current = buckets[index];
         Node<K, V> prev = null;
-        while (current != null) {
-            if (current.key.equals(key)) {
-                if (prev == null) {
+        while (current != null)
+        {
+            if (current.key.equals(key))
+            {
+                if (prev == null)
+                {
                     buckets[index] = current.next;
-                } else {
+                }
+                else
+                {
                     prev.next = current.next;
                 }
                 size--;
@@ -85,17 +90,34 @@ public class MyHashMap<K, V> {
         }
     }
 
-    public int size() {
+    public int size()
+    {
         return size;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return size == 0;
     }
 
-    public void clear() {
+    public void clear()
+    {
         buckets = new Node[DEFAULT_CAPACITY];
         size = 0;
+    }
+
+    private static class Node<K, V>
+    {
+        K key;
+        V value;
+        Node<K, V> next;
+
+        Node(K key, V value)
+        {
+            this.key = key;
+            this.value = value;
+            this.next = null;
+        }
     }
 }
 

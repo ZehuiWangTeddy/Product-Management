@@ -2,18 +2,18 @@ package com.nhlstendent.productmanagement.ui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
-public class TopPanel extends JPanel {
-    private JTextField searchField;
+public class TopPanel extends JPanel
+{
+    private final JTextField searchField;
 
     public TopPanel(ActionListener uploadHandler,
                     ActionListener searchHandler,
                     ActionListener sortHandler,
                     ActionListener sortByLetterHandler,
-                    ActionListener resetHandler) {
+                    ActionListener resetHandler)
+    {
 
         setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
@@ -40,14 +40,14 @@ public class TopPanel extends JPanel {
         sortByLetterButton.addActionListener(sortByLetterHandler);
         add(sortByLetterButton);
 
-
         // Reset Button
         JButton resetButton = new JButton("RESET");
         resetButton.addActionListener(resetHandler);
         add(resetButton);
     }
 
-    public String getSearchText() {
+    public String getSearchText()
+    {
         return searchField.getText();
     }
 }

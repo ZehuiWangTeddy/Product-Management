@@ -3,8 +3,6 @@ package com.nhlstendent.productmanagement.productManager;
 import com.nhlstendent.productmanagement.model.*;
 import com.nhlstendent.productmanagement.util.JsonUtil;
 
-import java.util.*;
-
 public class ProductManager
 {
     private MyArrayList<Product> arrayList; // for sorting and linear search
@@ -60,19 +58,24 @@ public class ProductManager
         this.hashMap = hashMap;
     }
 
-    public void importFromFile(String filePath) {
+    public void importFromFile(String filePath)
+    {
         MyArrayList<Product> products = JsonUtil.parseProduct(filePath);
-        if (products == null) {
+        if (products == null)
+        {
             throw new RuntimeException("Failed to load products from file");
         }
 
-        for (Product product : products) {
+        for (Product product : products)
+        {
             addProduct(product);
         }
     }
 
-    public void addProduct(Product product) {
-        if (productNames.contains(product.getName())) {
+    public void addProduct(Product product)
+    {
+        if (productNames.contains(product.getName()))
+        {
             throw new IllegalArgumentException("Product name already exists: " + product.getName());
         }
         this.arrayList.add(product);
@@ -81,9 +84,11 @@ public class ProductManager
         this.hashMap.put(product.getName(), product);
     }
 
-    public void removeProduct(String productName) {
+    public void removeProduct(String productName)
+    {
         Product product = this.hashMap.get(productName);
-        if (product != null) {
+        if (product != null)
+        {
             this.arrayList.remove(product);
             this.linkedList.remove(product);
             this.productNames.remove(productName);
