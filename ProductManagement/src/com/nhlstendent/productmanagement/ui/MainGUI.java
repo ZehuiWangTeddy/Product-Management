@@ -86,14 +86,20 @@ public class MainGUI
             String query = topPanel.getSearchText();
             long start = System.currentTimeMillis();
             MyArrayList<MyHashMap<String, Object>> results;
+            String searchType = "";
+            String dataStructure = "";
 
             try
             {
                 double priceQuery = Double.parseDouble(query); // Check if query is a number (price)
                 results = controller.binarySearchByPrice(priceQuery);
+                searchType = "Binary Search";
+                dataStructure = "Hash Map";
             } catch (NumberFormatException ex)
             {
                 results = controller.linearSearch(query); // If not a number, perform linear search
+                searchType = "Linear Search";
+                dataStructure = "Array List";
             }
 
             long duration = System.currentTimeMillis() - start;
@@ -106,7 +112,7 @@ public class MainGUI
             else
             {
                 tablePanel.updateTable(results);
-                statusLabel.setText("Execution Time: " + duration + " ms | Results: " + results.size());
+                statusLabel.setText(searchType + " using " + dataStructure + " | Execution Time: " + duration + " ms | Results: " + results.size());
             }
         }
     }

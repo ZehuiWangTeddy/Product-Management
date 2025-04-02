@@ -6,6 +6,8 @@ import com.nhlstendent.productmanagement.model.MyHashSet;
 import com.nhlstendent.productmanagement.model.Product;
 import com.nhlstendent.productmanagement.util.JsonUtil;
 
+import java.util.Comparator;
+
 public class ProductController
 {
     private MyArrayList<MyHashMap<String, Object>> products = new MyArrayList<>();
@@ -45,7 +47,7 @@ public class ProductController
         }
     }
 
-    // Linear Search
+    // Linear Search by name
     public MyArrayList<MyHashMap<String, Object>> linearSearch(String query)
     {
         MyArrayList<MyHashMap<String, Object>> results = new MyArrayList<>();
@@ -61,7 +63,7 @@ public class ProductController
         if (results.isEmpty())
         {
             MyHashMap<String, Object> error = new MyHashMap<>();
-            error.put("Sorry", "no products matching");
+            error.put("Sorry", "no products matching" + query);
             results.add(error);
         }
         return results;
@@ -121,16 +123,57 @@ public class ProductController
         return result;
     }
 
-    public void sortProductsByPrice()
-    {
-        products.sort((o1, o2) ->
-        {
-            Double price1 = (Double) o1.get("price");
-            Double price2 = (Double) o2.get("price");
-            return price2.compareTo(price1); // Descending
-        });
+    // Quick sort by price
+    public void sortProductsByPrice() {
+        Comparator<MyHashMap<String, Object>> priceComparator = (map1, map2) -> {
+            Double price1 = (Double) map1.get("price");
+            Double price2 = (Double) map2.get("price");
+            return price2.compareTo(price1);
+        };
+
+        products = quickSort(products, 0, products.size() - 1, priceComparator);
     }
 
+    private MyArrayList<MyHashMap<String, Object>> quickSort(
+            MyArrayList<MyHashMap<String, Object>> list,
+            int low,
+            int high,
+            Comparator<MyHashMap<String, Object>> comparator) {
+
+        if (low < high) {
+            int pivotIndex = partition(list, low, high, comparator);
+            quickSort(list, low, pivotIndex - 1, comparator);
+            quickSort(list, pivotIndex + 1, high, comparator);
+        }
+        return list;
+    }
+
+    private int partition(
+            MyArrayList<MyHashMap<String, Object>> list,
+            int low,
+            int high,
+            Comparator<MyHashMap<String, Object>> comparator) {
+
+        MyHashMap<String, Object> pivot = list.get(high);
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (comparator.compare(list.get(j), pivot) <= 0) {
+                i++;
+                MyHashMap<String, Object> temp = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, temp);
+            }
+        }
+
+        MyHashMap<String, Object> temp = list.get(i + 1);
+        list.set(i + 1, list.get(high));
+        list.set(high, temp);
+
+        return i + 1;
+    }
+
+    // Merge sort by name
     public void sortProductsByName()
     {
         products = mergeSort(products);
