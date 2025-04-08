@@ -10,9 +10,9 @@ import java.util.Comparator;
 
 public class ProductController
 {
+    private final MyHashSet<String> productNames = new MyHashSet<>();
     private MyArrayList<MyHashMap<String, Object>> products = new MyArrayList<>();
     private MyArrayList<MyHashMap<String, Object>> originalProducts = new MyArrayList<>();
-    private final MyHashSet<String> productNames = new MyHashSet<>();
 
     public void loadProductsFromFile(String filePath)
     {
@@ -124,8 +124,10 @@ public class ProductController
     }
 
     // Quick sort by price
-    public void sortProductsByPrice() {
-        Comparator<MyHashMap<String, Object>> priceComparator = (map1, map2) -> {
+    public void sortProductsByPrice()
+    {
+        Comparator<MyHashMap<String, Object>> priceComparator = (map1, map2) ->
+        {
             Double price1 = (Double) map1.get("price");
             Double price2 = (Double) map2.get("price");
             return price2.compareTo(price1);
@@ -138,9 +140,11 @@ public class ProductController
             MyArrayList<MyHashMap<String, Object>> list,
             int low,
             int high,
-            Comparator<MyHashMap<String, Object>> comparator) {
+            Comparator<MyHashMap<String, Object>> comparator)
+    {
 
-        if (low < high) {
+        if (low < high)
+        {
             int pivotIndex = partition(list, low, high, comparator);
             quickSort(list, low, pivotIndex - 1, comparator);
             quickSort(list, pivotIndex + 1, high, comparator);
@@ -152,13 +156,16 @@ public class ProductController
             MyArrayList<MyHashMap<String, Object>> list,
             int low,
             int high,
-            Comparator<MyHashMap<String, Object>> comparator) {
+            Comparator<MyHashMap<String, Object>> comparator)
+    {
 
         MyHashMap<String, Object> pivot = list.get(high);
         int i = low - 1;
 
-        for (int j = low; j < high; j++) {
-            if (comparator.compare(list.get(j), pivot) <= 0) {
+        for (int j = low; j < high; j++)
+        {
+            if (comparator.compare(list.get(j), pivot) <= 0)
+            {
                 i++;
                 MyHashMap<String, Object> temp = list.get(i);
                 list.set(i, list.get(j));

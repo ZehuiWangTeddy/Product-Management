@@ -4,6 +4,7 @@ public class MyLinkedList<T>
 {
     private Node<T> head;
     private int size;
+
     public MyLinkedList()
     {
         this.head = null;

@@ -7,6 +7,7 @@ import com.nhlstendent.productmanagement.ui.ProductTablePanel;
 import javax.swing.*;
 import java.awt.*;
 
+// This class only for test loading function.
 public class TestDataLoader
 {
     public static void main(String[] args)

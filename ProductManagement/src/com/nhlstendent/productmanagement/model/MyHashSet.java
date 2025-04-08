@@ -8,6 +8,7 @@ public class MyHashSet<T> implements Iterable<T>
     private static final int DEFAULT_CAPACITY = 16;
     private Node<T>[] buckets;
     private int size;
+
     public MyHashSet()
     {
         buckets = new Node[DEFAULT_CAPACITY];

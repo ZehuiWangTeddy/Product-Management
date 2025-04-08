@@ -5,6 +5,7 @@ public class MyHashMap<K, V>
     private static final int DEFAULT_CAPACITY = 16;
     private Node<K, V>[] buckets;
     private int size;
+
     public MyHashMap()
     {
         buckets = new Node[DEFAULT_CAPACITY];
