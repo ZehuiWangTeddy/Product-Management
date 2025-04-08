@@ -1,27 +1,387 @@
 [
   {
     "name": "Apple",
-    "price": 2.99,
+    "price": 1.99,
     "rating": 4.5
   },
   {
     "name": "Banana",
-    "price": 1.99,
-    "rating": 4.0
-  },
-  {
-    "name": "Orange",
-    "price": 3.49,
+    "price": 0.99,
     "rating": 4.2
   },
   {
-    "name": "Cookie",
-    "price": 4.59,
-    "rating": 2.1
+    "name": "Cherry",
+    "price": 3.49,
+    "rating": 4.0
   },
   {
-    "name": "Bread",
-    "price": 0.99,
-    "rating": 5.0
-  }
+    "name": "Date",
+    "price": 2.79,
+    "rating": 3.8
+  },
+  {
+    "name": "Elderberry",
+    "price": 5.99,
+    "rating": 4.3
+  },
+  {
+    "name": "Fig",
+    "price": 2.49,
+    "rating": 3.9
+  },
+  {
+    "name": "Grape",
+    "price": 2.99,
+    "rating": 4.6
+  },
+  {
+    "name": "Honeydew",
+    "price": 3.99,
+    "rating": 3.7
+  },
+  {
+    "name": "Indian Fig",
+    "price": 4.29,
+    "rating": 4.1
+  },
+  {
+    "name": "Jackfruit",
+    "price": 1.59,
+    "rating": 4.4
+  },
+  {
+    "name": "Kiwi",
+    "price": 2.19,
+    "rating": 4.0
+  },
+  {
+    "name": "Lemon",
+    "price": 1.49,
+    "rating": 4.5
+  },
+  {
+    "name": "Mango",
+    "price": 3.29,
+    "rating": 4.3
+  },
+  {
+    "name": "Nectarine",
+    "price": 2.89,
+    "rating": 4.2
+  },
+  {
+    "name": "Orange",
+    "price": 1.79,
+    "rating": 4.6
+  },
+  {
+    "name": "Papaya",
+    "price": 2.99,
+    "rating": 3.8
+  },
+  {
+    "name": "Quince",
+    "price": 4.99,
+    "rating": 3.5
+  },
+  {
+    "name": "Raspberry",
+    "price": 5.49,
+    "rating": 4.4
+  },
+  {
+    "name": "Strawberry",
+    "price": 3.59,
+    "rating": 4.7
+  },
+  {
+    "name": "Tangerine",
+    "price": 1.99,
+    "rating": 4.1
+  },
+  {
+    "name": "Ugli Fruit",
+    "price": 3.89,
+    "rating": 3.6
+  },
+  {
+    "name": "Vanilla Bean",
+    "price": 15.99,
+    "rating": 4.8
+  },
+  {
+    "name": "Watermelon",
+    "price": 6.99,
+    "rating": 4.2
+  },
+  {
+    "name": "Xigua",
+    "price": 5.79,
+    "rating": 4.0
+  },
+  {
+    "name": "Yellow Passion Fruit",
+    "price": 4.99,
+    "rating": 4.3
+  },
+  {
+    "name": "Zucchini",
+    "price": 1.29,
+    "rating": 3.9
+  },
+  {
+    "name": "Avocado",
+    "price": 2.49,
+    "rating": 4.5
+  },
+  {
+    "name": "Blackberry",
+    "price": 5.19,
+    "rating": 4.3
+  },
+  {
+    "name": "Cranberry",
+    "price": 3.79,
+    "rating": 4.0
+  },
+  {
+    "name": "Dragon Fruit",
+    "price": 6.99,
+    "rating": 4.1
+  },
+  {
+    "name": "Eggfruit",
+    "price": 2.59,
+    "rating": 3.7
+  },
+  {
+    "name": "Feijoa",
+    "price": 3.49,
+    "rating": 4.0
+  },
+  {
+    "name": "Gooseberry",
+    "price": 4.29,
+    "rating": 3.8
+  },
+  {
+    "name": "Huckleberry",
+    "price": 5.99,
+    "rating": 4.2
+  },
+  {
+    "name": "Ilama",
+    "price": 3.99,
+    "rating": 3.5
+  },
+  {
+    "name": "Jujube",
+    "price": 2.69,
+    "rating": 4.1
+  },
+  {
+    "name": "Kumquat",
+    "price": 4.19,
+    "rating": 3.9
+  },
+  {
+    "name": "Lime",
+    "price": 1.59,
+    "rating": 4.4
+  },
+  {
+    "name": "Mulberry",
+    "price": 3.29,
+    "rating": 4.0
+  },
+  {
+    "name": "Nutmeg",
+    "price": 7.49,
+    "rating": 4.3
+  },
+  {
+    "name": "Olive",
+    "price": 3.89,
+    "rating": 3.7
+  },
+  {
+    "name": "Peach",
+    "price": 2.99,
+    "rating": 4.5
+  },
+  {
+    "name": "Rambutan",
+    "price": 5.49,
+    "rating": 4.2
+  },
+  {
+    "name": "Salak",
+    "price": 4.99,
+    "rating": 3.9
+  },
+  {
+    "name": "Tamarillo",
+    "price": 2.79,
+    "rating": 4.1
+  },
+  {
+    "name": "Uvaia",
+    "price": 3.49,
+    "rating": 3.6
+  },
+  {
+    "name": "Velvet Apple",
+    "price": 5.29,
+    "rating": 4.0
+  },
+  {
+    "name": "Walnut",
+    "price": 6.19,
+    "rating": 4.3
+  },
+  {
+    "name": "Ximenia",
+    "price": 4.79,
+    "rating": 3.8
+  },
+  {
+    "name": "Yam",
+    "price": 2.39,
+    "rating": 4.1
+  },
+  {
+    "name": "Zebra Melon",
+    "price": 3.99,
+    "rating": 3.7
+  },
+    {
+      "name": "Ackee",
+      "price": 3.99,
+      "rating": 4.0
+    },
+    {
+      "name": "Buddha's Hand",
+      "price": 6.49,
+      "rating": 4.5
+    },
+    {
+      "name": "Cactus Pear",
+      "price": 2.79,
+      "rating": 3.9
+    },
+    {
+      "name": "Duku",
+      "price": 4.19,
+      "rating": 4.1
+    },
+    {
+      "name": "Emu Apple",
+      "price": 5.29,
+      "rating": 3.7
+    },
+    {
+      "name": "Finger Lime",
+      "price": 7.49,
+      "rating": 4.2
+    },
+    {
+      "name": "Granadilla",
+      "price": 4.89,
+      "rating": 4.3
+    },
+    {
+      "name": "Horned Melon",
+      "price": 5.99,
+      "rating": 3.8
+    },
+    {
+      "name": "Imbe",
+      "price": 3.49,
+      "rating": 4.0
+    },
+    {
+      "name": "Jabuticaba",
+      "price": 6.19,
+      "rating": 4.1
+    },
+    {
+      "name": "Kaffir Lime",
+      "price": 2.39,
+      "rating": 3.7
+    },
+    {
+      "name": "Langsat",
+      "price": 4.79,
+      "rating": 4.2
+    },
+    {
+      "name": "Mamey Sapote",
+      "price": 5.99,
+      "rating": 4.3
+    },
+    {
+      "name": "Nance",
+      "price": 3.89,
+      "rating": 3.9
+    },
+    {
+      "name": "Oil Palm Fruit",
+      "price": 4.59,
+      "rating": 4.0
+    },
+    {
+      "name": "Pequi",
+      "price": 6.79,
+      "rating": 3.6
+    },
+    {
+      "name": "Quandong",
+      "price": 5.29,
+      "rating": 4.1
+    },
+    {
+      "name": "Rukam",
+      "price": 3.99,
+      "rating": 3.8
+    },
+    {
+      "name": "Safou",
+      "price": 4.49,
+      "rating": 4.0
+    },
+    {
+      "name": "Tamarind",
+      "price": 3.79,
+      "rating": 4.2
+    },
+    {
+      "name": "Umbu",
+      "price": 5.69,
+      "rating": 3.7
+    },
+    {
+      "name": "Voavanga",
+      "price": 6.19,
+      "rating": 4.0
+    },
+    {
+      "name": "Wild Mango",
+      "price": 4.99,
+      "rating": 3.9
+    },
+    {
+      "name": "Xoconostle",
+      "price": 3.59,
+      "rating": 4.1
+    },
+    {
+      "name": "Yangmei",
+      "price": 5.89,
+      "rating": 4.2
+    },
+    {
+      "name": "Ziziphus",
+      "price": 6.49,
+      "rating": 3.8
+    }
 ]
