@@ -2,7 +2,7 @@ package com.nhlstendent.productmanagement.model;
 
 import java.util.Objects;
 
-public class Product
+public class Product implements Comparable<Product>
 {
     private String name;
     private double price;
@@ -79,5 +79,12 @@ public class Product
     public int hashCode()
     {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public int compareTo(Product o)
+    {
+        // Price low to high
+        return Double.compare(this.price, o.price);
     }
 }
